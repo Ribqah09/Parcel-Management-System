@@ -22,6 +22,7 @@ A Java Swing-based desktop application for managing parcel deliveries, integrate
 ### Login Pages
 ![Admin Login](images/Adminlogin.png)
 ![User Login](images/Userlogin.png)
+![User Login](images/Riderlogin.png)
 
 ### Dashboard
 ![User Dashboard](images/UserDashboard.png)
@@ -31,7 +32,7 @@ A Java Swing-based desktop application for managing parcel deliveries, integrate
 ![Add Parcel](images/SendParcel.png)
 
 ### SignUp Pages
-![Admin SignUp](images/AdminSignUp.png)
+![Admin SignUp](images/RiderSignUp.png)
 ![User SignUp](images/UserSignUp.png)
 
 ## ⚙️ How to Run
