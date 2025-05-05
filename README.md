@@ -19,20 +19,21 @@ A Java Swing-based desktop application for managing parcel deliveries, integrate
 - Netbean IDE
 
 ## 📷 Screenshots
+
 ### Login Pages
-![Login Pages](C:\Users\user\OneDrive\Documents\NetBeansProjects\SmartParcelManagement\Images\Adminlogin.png)
-![Login Pages](Images/Userlogin.png)
+![Admin Login](Images/Adminlogin.png)
+![User Login](Images/Userlogin.png)
 
 ### Dashboard
-![Dashboard](Images/UserDashboard.png)
-![Dashboard](Images/RiderDashboard.png)
+![User Dashboard](Images/UserDashboard.png)
+![Rider Dashboard](Images/RiderDashboard.png)
 
 ### Add Parcel Form
 ![Add Parcel](Images/SendParcel.png)
 
 ### SignUp Pages
-![SignUp Pages](Images/AdminSignUp.png)
-![SignUp Pages](Images/UserSignUp.png)
+![Admin SignUp](Images/AdminSignUp.png)
+![User SignUp](Images/UserSignUp.png)
 
 ## ⚙️ How to Run
 
