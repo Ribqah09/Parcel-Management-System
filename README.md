@@ -20,7 +20,7 @@ A Java Swing-based desktop application for managing parcel deliveries, integrate
 
 ## 📷 Screenshots
 ### Login Pages
-![Login Pages](Images/Adminlogin.png)
+![Login Pages](C:\Users\user\OneDrive\Documents\NetBeansProjects\SmartParcelManagement\Images\Adminlogin.png)
 ![Login Pages](Images/Userlogin.png)
 
 ### Dashboard
