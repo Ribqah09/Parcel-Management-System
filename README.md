@@ -24,8 +24,10 @@ A Java Swing-based desktop application for managing parcel deliveries, integrate
 ![User Login](images/Userlogin.png)
 ![User Login](images/Riderlogin.png)
 
+### Track Parcel 
+![Track Parcel](images/AdminTrackParcel.png)
+
 ### Dashboard
-![User Dashboard](images/UserDashboard.png)
 ![Rider Dashboard](images/RiderDashboard.png)
 
 ### Add Parcel Form
