@@ -16,7 +16,6 @@ A Java Swing-based desktop application for managing parcel deliveries, integrate
 - Java (Swing)
 - MySQL
 - JDBC
-- Netbean IDE
 
 ## 📷 Screenshots
 
@@ -44,15 +43,8 @@ A Java Swing-based desktop application for managing parcel deliveries, integrate
 5. Run `Main.java`.
 
 ## 🗃️ Database
-To set up the database for this project, follow these steps:
 
-1. **Run the SQL script** `database.sql` to create the required tables in your MySQL server.
-2. **Configure database credentials** in the `DBConnection.java` file (update MySQL username, password, and database name).
-
-## Running the Project
-1. Compile and run the Java project using your favorite IDE (NetBeans, IntelliJ, etc.).
-2. Make sure your MySQL server is running.
-3. The app should allow users to add, track, and manage parcels.
+You can provide a file like `database.sql` containing table creation and test data.
 
 ## 📝 License
 
