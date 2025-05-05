@@ -22,7 +22,7 @@ A Java Swing-based desktop application for managing parcel deliveries, integrate
 ### Login Pages
 ![Admin Login](images/Adminlogin.png)
 ![User Login](images/Userlogin.png)
-![User Login](images/Riderlogin.png)
+![Rider Login](images/Riderlogin.png)
 
 ### Track Parcel 
 ![Track Parcel](images/AdminTrackParcel.png)
