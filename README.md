@@ -21,19 +21,19 @@ A Java Swing-based desktop application for managing parcel deliveries, integrate
 ## 📷 Screenshots
 
 ### Login Pages
-![Admin Login](Images/Adminlogin.png)
-![User Login](Images/Userlogin.png)
+![Admin Login](images/Adminlogin.png)
+![User Login](images/Userlogin.png)
 
 ### Dashboard
-![User Dashboard](Images/UserDashboard.png)
-![Rider Dashboard](Images/RiderDashboard.png)
+![User Dashboard](images/UserDashboard.png)
+![Rider Dashboard](images/RiderDashboard.png)
 
 ### Add Parcel Form
-![Add Parcel](Images/SendParcel.png)
+![Add Parcel](images/SendParcel.png)
 
 ### SignUp Pages
-![Admin SignUp](Images/AdminSignUp.png)
-![User SignUp](Images/UserSignUp.png)
+![Admin SignUp](images/AdminSignUp.png)
+![User SignUp](images/UserSignUp.png)
 
 ## ⚙️ How to Run
 
