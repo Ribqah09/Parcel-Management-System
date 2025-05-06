@@ -47,7 +47,7 @@ A Java Swing-based desktop application for managing parcel deliveries, integrate
 
 ## 🗃️ Database
 
-database.sql
+![DataBase Example](Database/database.sql)
 
 ## 📝 License
 
