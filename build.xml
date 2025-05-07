@@ -1,0 +1,40 @@
+<project name="ParcelManagementSystem" default="build">
+
+    <!-- Define paths -->
+    <property name="src.dir" value="src/main/java"/>
+    <property name="build.dir" value="build"/>
+    <property name="dist.dir" value="dist"/>
+    <property name="lib.dir" value="lib"/>
+
+    <!-- Clean target: Deletes build and dist directories -->
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+    </target>
+
+    <!-- Compile target: Compiles Java files -->
+    <target name="compile" depends="clean">
+        <mkdir dir="${build.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false">
+            <classpath>
+                <fileset dir="${lib.dir}" includes="**/*.jar"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <!-- Jar target: Creates a JAR file -->
+    <target name="jar" depends="compile">
+        <mkdir dir="${dist.dir}"/>
+        <jar destfile="${dist.dir}/ParcelManagementSystem.jar" basedir="${build.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="SmartParcelManagement"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <!-- Build target: Calls jar -->
+    <target name="build" depends="jar">
+        <echo message="Build complete!"/>
+    </target>
+
+</project>
