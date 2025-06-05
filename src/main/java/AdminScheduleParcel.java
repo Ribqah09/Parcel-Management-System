@@ -22,8 +22,8 @@ public class AdminScheduleParcel extends javax.swing.JFrame {
 
         try {
             Connection c=new Connection();
-            ResultSet rs = c.s.executeQuery("SELECT * FROM parcels WHERE  assigned = 'Not Assigned'and status='pending' ORDER BY priority");
-
+            ResultSet rs = c.s.executeQuery("SELECT * FROM parcels WHERE  assigned = 'Not Assigned' and status='pending' OR status='expired' ORDER BY priority ");
+//            OR assigned = 'Assigned' and status='expired'
             table.setModel(DbUtils.resultSetToTableModel(rs));
             
         } 
@@ -289,31 +289,43 @@ public class AdminScheduleParcel extends javax.swing.JFrame {
             int riderID=Integer.parseInt(txtRID.getText());
             int selectedIndex = table.getSelectedRow();
             
-            String fetchParcelQuery = "SELECT * FROM parcels WHERE id = '" + parcelID + "'"; 
-            ResultSet rs = conn.s.executeQuery(fetchParcelQuery);   
-            if (rs.next()) {
-                String senderName = rs.getString("senderName");
-                String senderContact = rs.getString("senderContact");
-                String senderAddress = rs.getString("senderAddress");
-                String senderEmail = rs.getString("senderEmail");
-                String receiverName = rs.getString("receiverName");
-                String receiverContact = rs.getString("receiverContact");
-                String receiverAddress = rs.getString("receiverAddress");
-                String receiverEmail = rs.getString("receiverEmail");
-                double weight = rs.getDouble("weight");
-                int priority = rs.getInt("priority");
-                String city = rs.getString("city");
-                String status = rs.getString("status");
-                double deliveryCharges = rs.getDouble("DeliveryCharges");
-                
-                String insertQuery = "INSERT INTO assignedparcels (parcel_id, rider_id, senderName, senderContact, senderAddress, senderEmail, "
-                        + "receiverName, receiverContact, receiverAddress, receiverEmail, weight, priority, city, status, DeliveryCharges) "
-                        + "VALUES ('" + parcelID + "', " + riderID + ", '" + senderName + "', '" + senderContact + "', '" + senderAddress + "', '" 
-                        + senderEmail + "', '" + receiverName + "', '" + receiverContact + "', '" + receiverAddress + "', '" + receiverEmail 
-                        + "', " + weight + ", " + priority + ", '" + city + "', '" + status + "',  " + deliveryCharges + ")";
 
-                int rowsInserted = conn.s.executeUpdate(insertQuery);
-                
+                String fetchParcelQuery = "SELECT * FROM parcels WHERE id = '" + parcelID + "'"; 
+    ResultSet rs = conn.s.executeQuery(fetchParcelQuery);   
+    if (rs.next()) {
+        String senderName = rs.getString("senderName");
+        String senderContact = rs.getString("senderContact");
+        String senderAddress = rs.getString("senderAddress");
+        String senderEmail = rs.getString("senderEmail");
+        String receiverName = rs.getString("receiverName");
+        String receiverContact = rs.getString("receiverContact");
+        String receiverAddress = rs.getString("receiverAddress");
+        String receiverEmail = rs.getString("receiverEmail");
+        double weight = rs.getDouble("weight");
+        int priority = rs.getInt("priority");
+        String city = rs.getString("city");
+        String status = rs.getString("status");
+        double deliveryCharges = rs.getDouble("DeliveryCharges");
+        
+        // Get the current timestamp for assigned time
+        String assignedTime = "CURRENT_TIMESTAMP";
+        
+        // Fetch the already calculated delivery time from the parcels table
+        String deliveryTime = rs.getString("expire_time");
+        
+        // Set delivered_time as NULL initially
+        String deliveredTime = "NULL";
+
+        // Insert query to add assigned parcel data to assignedparcels table
+        String insertQuery = "INSERT INTO assignedparcels (parcel_id, rider_id, senderName, senderContact, senderAddress, senderEmail, "
+                + "receiverName, receiverContact, receiverAddress, receiverEmail, weight, priority, city, status, DeliveryCharges, "
+                + "assigned_time, expire_time, delivered_time) "
+                + "SELECT id, " + riderID + ", senderName, senderContact, senderAddress, senderEmail, "
+                + "receiverName, receiverContact, receiverAddress, receiverEmail, weight, priority, city, status, DeliveryCharges, "
+                + assignedTime + ", expire_time, " + deliveredTime
+                + " FROM parcels WHERE id = '" + parcelID + "'";
+
+        int rowsInserted = conn.s.executeUpdate(insertQuery);
 
             if (rowsInserted > 0) {
                 // Update the assigned column to 'Assigned'

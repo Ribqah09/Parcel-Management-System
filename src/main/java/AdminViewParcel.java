@@ -35,6 +35,8 @@ public class AdminViewParcel extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         btnBack = new javax.swing.JButton();
+        btnPrecise = new javax.swing.JButton();
+        btnDetailed = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -95,6 +97,20 @@ public class AdminViewParcel extends javax.swing.JFrame {
             }
         });
 
+        btnPrecise.setText("SHOW PRECISE");
+        btnPrecise.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPreciseActionPerformed(evt);
+            }
+        });
+
+        btnDetailed.setText("SHOW DETAILED");
+        btnDetailed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDetailedActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -110,8 +126,12 @@ public class AdminViewParcel extends javax.swing.JFrame {
                 .addContainerGap(483, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnBack)
-                .addGap(562, 562, 562))
+                .addComponent(btnDetailed)
+                .addGap(49, 49, 49)
+                .addComponent(btnPrecise)
+                .addGap(45, 45, 45)
+                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(382, 382, 382))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -124,9 +144,12 @@ public class AdminViewParcel extends javax.swing.JFrame {
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnBack)
-                .addGap(0, 36, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnPrecise)
+                    .addComponent(btnDetailed)
+                    .addComponent(btnBack))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 630));
@@ -140,6 +163,33 @@ public class AdminViewParcel extends javax.swing.JFrame {
         a.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnPreciseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreciseActionPerformed
+        // TODO add your handling code here:
+        try {
+            Connection c=new Connection();
+            ResultSet rs=c.s.executeQuery("SELECT status, COUNT(*) AS Total_Parcels\n" +
+"FROM parcels\n" +
+"GROUP BY status;");
+            table.setModel(DbUtils.resultSetToTableModel(rs));
+        } 
+          catch (Exception e) {
+              JOptionPane.showMessageDialog(null,"Table Exception:"+e);
+        }
+
+    }//GEN-LAST:event_btnPreciseActionPerformed
+
+    private void btnDetailedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetailedActionPerformed
+        // TODO add your handling code here:
+        try {
+            Connection c=new Connection();
+            ResultSet rs=c.s.executeQuery("select * from parcels order by priority");
+            table.setModel(DbUtils.resultSetToTableModel(rs));
+        } 
+          catch (Exception e) {
+              JOptionPane.showMessageDialog(null,"Table Exception:"+e);
+        }
+    }//GEN-LAST:event_btnDetailedActionPerformed
 
     /**
      * @param args the command line arguments
@@ -179,6 +229,8 @@ public class AdminViewParcel extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnDetailed;
+    private javax.swing.JButton btnPrecise;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;

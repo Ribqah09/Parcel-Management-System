@@ -505,30 +505,71 @@ public class UserAddParcel extends javax.swing.JFrame {
                 return;
                             
             }
-            while (!fifoQueue.isEmpty()) {
-                 
-                Parcel fifoParcel = fifoQueue.poll(); // Remove parcel from the queue
-                String query = "INSERT INTO parcels VALUES ('" + fifoParcel.getId() + "', '" + fifoParcel.getSenderName() + "', '" +
-                fifoParcel.getSenderContact() + "', '" + fifoParcel.getSenderAddress() + "', '" +
-                fifoParcel.getSenderEmail() + "', '" + fifoParcel.getReceiverName() + "', '" +
-                fifoParcel.getReceiverContact() + "', '" + fifoParcel.getReceiverAddress() + "', '" +
-                fifoParcel.getReceiverEmail() + "', '" + fifoParcel.getWeight() + "', '" +
-                fifoParcel.getPriority() + "', '" + fifoParcel.getCity() + "', 'pending', '" + userId + "', '" + price + "','Not Assigned')";
-                conn.s.executeUpdate(query);
-                
-            }
+//            while (!fifoQueue.isEmpty()) {
+//                 
+//                Parcel fifoParcel = fifoQueue.poll(); // Remove parcel from the queue
+//                String query = "INSERT INTO parcels VALUES ('" + fifoParcel.getId() + "', '" + fifoParcel.getSenderName() + "', '" +
+//                fifoParcel.getSenderContact() + "', '" + fifoParcel.getSenderAddress() + "', '" +
+//                fifoParcel.getSenderEmail() + "', '" + fifoParcel.getReceiverName() + "', '" +
+//                fifoParcel.getReceiverContact() + "', '" + fifoParcel.getReceiverAddress() + "', '" +
+//                fifoParcel.getReceiverEmail() + "', '" + fifoParcel.getWeight() + "', '" +
+//                fifoParcel.getPriority() + "', '" + fifoParcel.getCity() + "', 'pending', '" + userId + "', '" + price + "','Not Assigned')";
+//                conn.s.executeUpdate(query);
+//                
+//            }
+//
+//            while (!priorityQueue.isEmpty()) {
+//                Parcel priorityParcel = priorityQueue.poll(); // Remove parcel from the priority queue
+//                String query = "INSERT INTO parcels VALUES ('" + priorityParcel.getId() + "', '" + priorityParcel.getSenderName() + "', '" +
+//                priorityParcel.getSenderContact() + "', '" + priorityParcel.getSenderAddress() + "', '" +
+//                priorityParcel.getSenderEmail() + "', '" + priorityParcel.getReceiverName() + "', '" +
+//                priorityParcel.getReceiverContact() + "', '" + priorityParcel.getReceiverAddress() + "', '" +
+//                priorityParcel.getReceiverEmail() + "', '" + priorityParcel.getWeight() + "', '" +
+//                priorityParcel.getPriority() + "', '" + priorityParcel.getCity() + "', 'pending', '" + userId + "', '" + price + "','Not Assigned')";
+//                conn.s.executeUpdate(query);
+//   
+//            }
+             while (!fifoQueue.isEmpty()) {
+    Parcel fifoParcel = fifoQueue.poll(); // Remove parcel from the queue
 
-            while (!priorityQueue.isEmpty()) {
-                Parcel priorityParcel = priorityQueue.poll(); // Remove parcel from the priority queue
-                String query = "INSERT INTO parcels VALUES ('" + priorityParcel.getId() + "', '" + priorityParcel.getSenderName() + "', '" +
-                priorityParcel.getSenderContact() + "', '" + priorityParcel.getSenderAddress() + "', '" +
-                priorityParcel.getSenderEmail() + "', '" + priorityParcel.getReceiverName() + "', '" +
-                priorityParcel.getReceiverContact() + "', '" + priorityParcel.getReceiverAddress() + "', '" +
-                priorityParcel.getReceiverEmail() + "', '" + priorityParcel.getWeight() + "', '" +
-                priorityParcel.getPriority() + "', '" + priorityParcel.getCity() + "', 'pending', '" + userId + "', '" + price + "','Not Assigned')";
-                conn.s.executeUpdate(query);
-   
-            }
+    String query = "INSERT INTO parcels (id, senderName, senderContact, senderAddress, senderEmail, " +
+        "receiverName, receiverContact, receiverAddress, receiverEmail, weight, priority, city, status, " +
+        "user_id, DeliveryCharges, assigned, assigned_time, expire_time,deliverd_time) VALUES ('" + 
+        fifoParcel.getId() + "', '" + fifoParcel.getSenderName() + "', '" + fifoParcel.getSenderContact() + "', '" +
+        fifoParcel.getSenderAddress() + "', '" + fifoParcel.getSenderEmail() + "', '" + fifoParcel.getReceiverName() +
+        "', '" + fifoParcel.getReceiverContact() + "', '" + fifoParcel.getReceiverAddress() + "', '" +
+        fifoParcel.getReceiverEmail() + "', " + fifoParcel.getWeight() + ", " + fifoParcel.getPriority() + ", '" +
+        fifoParcel.getCity() + "', 'pending', " + userId + ", " + price + ", 'Not Assigned', CURRENT_TIMESTAMP, " +
+        "CASE " +
+        "WHEN " + fifoParcel.getPriority() + " = 1 THEN DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 1 DAY) " +
+        "WHEN " + fifoParcel.getPriority() + " = 2 THEN DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 2 DAY) " +
+        "WHEN " + fifoParcel.getPriority() + " = 3 THEN DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 4 DAY) " +
+        "ELSE DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 7 DAY) " +
+        "END, NULL)";
+
+    conn.s.executeUpdate(query);
+}
+
+             while (!priorityQueue.isEmpty()) {
+                  Parcel priorityParcel = priorityQueue.poll(); // Remove parcel from the priority queue
+                  String query = "INSERT INTO parcels (id, senderName, senderContact, senderAddress, senderEmail, " +
+        "receiverName, receiverContact, receiverAddress, receiverEmail, weight, priority, city, status, " +
+        "user_id, DeliveryCharges, assigned, assigned_time,expire_time, delivered_time) VALUES ('" + 
+        priorityParcel.getId() + "', '" + priorityParcel.getSenderName() + "', '" + priorityParcel.getSenderContact() + "', '" +
+        priorityParcel.getSenderAddress() + "', '" + priorityParcel.getSenderEmail() + "', '" + priorityParcel.getReceiverName() +
+        "', '" + priorityParcel.getReceiverContact() + "', '" + priorityParcel.getReceiverAddress() + "', '" +
+        priorityParcel.getReceiverEmail() + "', " + priorityParcel.getWeight() + ", " + priorityParcel.getPriority() + ", '" +
+        priorityParcel.getCity() + "', 'pending', " + userId + ", " + price + ", 'Not Assigned', CURRENT_TIMESTAMP, " +
+        "CASE " +
+        "WHEN " + priorityParcel.getPriority() + " = 1 THEN DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 1 DAY) " +
+        "WHEN " + priorityParcel.getPriority() + " = 2 THEN DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 2 DAY) " +
+        "WHEN " + priorityParcel.getPriority() + " = 3 THEN DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 4 DAY) " +
+        "ELSE DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 7 DAY) " +
+        "END, NULL)";
+
+    conn.s.executeUpdate(query);
+}
+
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Add Button Exception:"+e);

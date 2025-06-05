@@ -15,7 +15,7 @@ public class RiderViewParcel extends javax.swing.JFrame {
         try {
             Connection c=new Connection();
             int riderId = RiderLogin.loggedInRiderId;
-            ResultSet rs=c.s.executeQuery("select id, senderName, senderAddress, senderEmail, receiverName, receiverAddress, receiverEmail, DeliveryCharges, city, priority, status, weight from assignedparcels where rider_id="+riderId+ " " + "order by priority");
+            ResultSet rs=c.s.executeQuery("select parcel_id, senderName, senderAddress, senderEmail, receiverName, receiverAddress, receiverEmail, DeliveryCharges, city, priority, status, weight from assignedparcels where rider_id="+riderId+ " " + "order by priority");
             table.setModel(DbUtils.resultSetToTableModel(rs));
         } 
           catch (Exception e) {

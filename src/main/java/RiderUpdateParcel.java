@@ -21,7 +21,14 @@ public class RiderUpdateParcel extends javax.swing.JFrame {
         try {
             Connection c=new Connection();
             int riderId = RiderLogin.loggedInRiderId;
-            ResultSet rs=c.s.executeQuery("select id,parcel_id, senderName, senderAddress, senderEmail, receiverName, receiverAddress, receiverEmail, DeliveryCharges, city, priority,status, weight from assignedparcels where status='" + "pending" + "' and rider_id="+riderId+" "+"order by priority");
+            ResultSet rs = c.s.executeQuery(
+    "SELECT id, parcel_id, senderName, senderAddress, senderEmail, receiverName, receiverAddress, receiverEmail, " +
+    "DeliveryCharges, city, priority, status, weight, assigned_time, expire_time, delivered_time " +
+    "FROM assignedparcels " +
+    "WHERE (status = 'pending' OR status = 'expired') AND rider_id = " + riderId + " " +
+    "ORDER BY priority"
+);
+
             table.setModel(DbUtils.resultSetToTableModel(rs));
         } 
           catch (Exception e) {
@@ -163,28 +170,44 @@ public class RiderUpdateParcel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDeliveredActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeliveredActionPerformed
-        // TODO add your handling code here:
-        try {
-            int selectedRow = table.getSelectedRow();
-            String parcelId = table.getValueAt(selectedRow, 1).toString(); // Assuming column 1 is the actual parcel ID
-            Connection conn = new Connection();
-            String updateQueryParcels = "UPDATE parcels SET status = 'Delivered' WHERE id = '" + parcelId + "'";
-            conn.s.executeUpdate(updateQueryParcels);
-            String updateQueryAssignedParcels = "UPDATE assignedparcels SET status = 'Delivered' WHERE parcel_id = '" + parcelId + "'";
-            int rowsUpdated=conn.s.executeUpdate(updateQueryAssignedParcels);
+              
+try {
+    int selectedRow = table.getSelectedRow();
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(null, "Please select a parcel.");
+        return;
+    }
 
-            if (rowsUpdated > 0) {
-                JOptionPane.showMessageDialog(null, "Record successfully updated!");
-                DefaultTableModel model = (DefaultTableModel) table.getModel();
-                model.removeRow(selectedRow);
-            
-            } else {
-                JOptionPane.showMessageDialog(null, "Failed to update the record.");
-            }
-        } 
-        catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
-        }    
+    String parcelId = table.getValueAt(selectedRow, 1).toString(); // Assuming parcel ID is in column 1
+    String status = table.getValueAt(selectedRow, 12).toString(); // Replace with actual column index for status
+
+    if (status.equalsIgnoreCase("Expired")) {
+        JOptionPane.showMessageDialog(null, "This parcel is expired and cannot be marked as delivered.");
+        btnDelivered.setEnabled(false);  // disable the button
+        return;
+    }
+
+    Connection conn = new Connection();
+    String deliveredTime = "CURRENT_TIMESTAMP";
+
+    String updateQueryParcels = "UPDATE parcels SET status = 'Delivered', delivered_time = " + deliveredTime + " WHERE id = '" + parcelId + "'";
+    conn.s.executeUpdate(updateQueryParcels);
+
+    String updateQueryAssignedParcels = "UPDATE assignedparcels SET status = 'Delivered', delivered_time = " + deliveredTime + " WHERE parcel_id = '" + parcelId + "'";
+    int rowsUpdated = conn.s.executeUpdate(updateQueryAssignedParcels);
+
+    if (rowsUpdated > 0) {
+        JOptionPane.showMessageDialog(null, "Record successfully updated!");
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.removeRow(selectedRow);
+    } else {
+        JOptionPane.showMessageDialog(null, "Failed to update the record.");
+    }
+
+} catch (Exception e) {
+    JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+}
+
     }//GEN-LAST:event_btnDeliveredActionPerformed
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
